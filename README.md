@@ -108,3 +108,38 @@
         DB-->>S: Success
         S-->>U: Notify Booking Cancelled & Refunded
     end
+```
+
+```mermaid
+  graph TD
+    A[Start] --> B[Guest's departure];
+    B --> C[Preparing the room, cleaning];
+    C --> D[Checking equipment and furniture];
+    D --> E{Is everything okay?};
+    
+    E -- "No" --> F[Call a technical];
+    F --> G[Status 'Under repair'];
+    G --> H[Maintenance];
+    H --> D
+    
+    E -- "Yes" --> I[Notify of readiness of the room];
+    I --> J[Change status to 'free'];
+    J --> K((End));
+```
+
+```mermaid
+  stateDiagram-v2
+    [*] --> Free
+    
+    Free --> Reserved : The client booked
+    Reserved --> Free : Room reservation cancellation
+    Reserved --> Occupied : Check-in
+    Occupied --> Free : Check-out
+    
+    Free --> Under_repair : Malfunction detected
+    
+    Occupied --> Under_repair : Urgent technical malfunction
+    
+    note right of Under_repair
+        Room Maintance
+    end note
