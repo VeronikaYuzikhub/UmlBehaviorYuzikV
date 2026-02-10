@@ -132,13 +132,12 @@
     [*] --> Free
     
     Free --> Reserved : The client booked
-    Reserved --> Free : Room reservation cancellation
     Reserved --> Occupied : Check-in
-    Occupied --> Free : Check-out
+    Occupied --> Free : Check-out/res.cancellation
     
     Free --> Under_repair : Malfunction detected
-    
     Occupied --> Under_repair : Urgent technical malfunction
+    Under_repair --> Free : Repair completed
     
     note right of Under_repair
         Room Maintance
